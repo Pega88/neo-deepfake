@@ -8,15 +8,15 @@ from boa.interop.Neo.Action import RegisterAction
 # build ../neo-deepfake/main.py test 07070707 02 True False False balanceOf AK2nJJpJr6o664CWJKi1QRXjqeic2zRp8y x x
 # build ../neo-deepfake/main.py test 07070707 02 True False False balanceOf AVEcFtSVVzTS3DapRQwfM4tW9jP7ZnJ61m x x
 # build ../neo-deepfake/main.py test 07070707 02 True False False balanceOf APJd31aTbK4T3qsj45e6uL39FTwX8EGuHJ x x
-# build ../neo-deepfake/main.py test 07070707 07 True False False transfer AK2nJJpJr6o664CWJKi1QRXjqeic2zRp8y APJd31aTbK4T3qsj45e6uL39FTwX8EGuHJ 1000
+# build ../neo-deepfake/main.py test 07070707 07 True False False transfer AK2nJJpJr6o664CWJKi1QRXjqeic2zRp8y APJd31aTbK4T3qsj45e6uL39FTwX8EGuHJ 5000
 # build ../neo-deepfake/main.py test 07070707 02 True False False balanceOf AK2nJJpJr6o664CWJKi1QRXjqeic2zRp8y x x
 # build ../neo-deepfake/main.py test 07070707 02 True False False balanceOf AVEcFtSVVzTS3DapRQwfM4tW9jP7ZnJ61m x x
 # build ../neo-deepfake/main.py test 07070707 02 True False False balanceOf APJd31aTbK4T3qsj45e6uL39FTwX8EGuHJ x x
 
-# build ../neo-deepfake/main.py test 07070707 07 True False False create_request video_id AK2nJJpJr6o664CWJKi1QRXjqeic2zRp8y txt1
+# build ../neo-deepfake/main.py test 07070707 07 True False False create_request video_id APJd31aTbK4T3qsj45e6uL39FTwX8EGuHJ txt1
 # build ../neo-deepfake/main.py test 07070707 07 True False False list_requests video_id x x
 # build ../neo-deepfake/main.py test 07070707 07 True False False list_approvals video_id x x
-# build ../neo-deepfake/main.py test 07070707 07 True False False approve_request video_id AK2nJJpJr6o664CWJKi1QRXjqeic2zRp8y txt1
+# build ../neo-deepfake/main.py test 07070707 07 True False False approve_request video_id APJd31aTbK4T3qsj45e6uL39FTwX8EGuHJ txt1
 # build ../neo-deepfake/main.py test 07070707 07 True False False list_approvals video_id x x
 # build ../neo-deepfake/main.py test 07070707 07 True False False list_requests video_id x x
 
