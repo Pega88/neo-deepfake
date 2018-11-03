@@ -1,0 +1,33 @@
+{
+    "avm": {
+        "name": "main",
+        "hash": "f60b95d62f0187138d3e0a0956a64e87"
+    },
+    "compiler": {
+        "name": "neo-boa",
+        "version": "0.5.6"
+    },
+    "files": [
+        {
+            "id": 1,
+            "url": "/Users/nbuekers/Development/crypto/neo/neo-deepfake/main.py"
+        }
+    ],
+    "map": [
+        {
+            "start": 3,
+            "end": 31,
+            "file": 1,
+            "method": "Main",
+            "line": 2,
+            "file_line_no": 2
+        },
+        {
+            "start": 32,
+            "end": 35,
+            "file": 1,
+            "line": 3
+        }
+    ],
+    "breakpoints": []
+}
