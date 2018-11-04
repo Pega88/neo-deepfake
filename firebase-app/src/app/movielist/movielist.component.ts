@@ -103,7 +103,7 @@ export class MovielistComponent implements OnInit{
             this.openPopup(String(JSON.stringify(val)))
           },
           response => {
-              this.openPopup(String(JSON.stringify(response)))
+              //this.openPopup(String(JSON.stringify(response)))
               console.log("POST call in error", response);
           },
           () => {

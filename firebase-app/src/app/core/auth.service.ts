@@ -20,11 +20,11 @@ export class AuthService {
  ){}
 
  postToStatus(obj) {
-      return this.http.post("http://0.0.0.0:8080/create_asset",obj)
+      return this.http.get("http://0.0.0.0:8080/create_request",obj)
  }
 
  getBalance() {
-   return this.http.post("http://0.0.0.0:8080/list_balance_fanboy",{})
+   return this.http.get("http://0.0.0.0:8080/list_balance_fanboy",{})
  }
 
  saveNewRequest(video_id, phrase, requester, map){
