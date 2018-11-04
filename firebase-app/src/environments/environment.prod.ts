@@ -1,11 +1,11 @@
 export const environment = {
   production: true,
   firebase: {
-    apiKey: "",
-    authDomain: "neo-hackathon.firebaseapp.com",
-    databaseURL: "https://neo-hackathon.firebaseio.com",
-    projectId: "neo-hackathon",
-    storageBucket: "neo-hackathon.appspot.com",
-    messagingSenderId: "852089438833"
+    apiKey: "AIzaSyAB2u2JXTA-oqe-VmGJMEuBu0S_i1BRghQ",
+    authDomain: "neo-zurich.firebaseapp.com",
+    databaseURL: "https://neo-zurich.firebaseio.com",
+    projectId: "neo-zurich",
+    storageBucket: "neo-zurich.appspot.com",
+    messagingSenderId: "261940443665"
   }
 };

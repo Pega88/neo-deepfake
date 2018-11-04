@@ -8,6 +8,7 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { environment } from '../environments/environment';
 import { LoginComponent } from './login/login.component';
 import { UserComponent } from './user/user.component';
+import { MovielistComponent } from './movielist/movielist.component';
 import { RegisterComponent } from './register/register.component';
 import { UserResolver } from './user/user.resolver';
 import { AuthGuard } from './core/auth.guard';
@@ -24,7 +25,8 @@ import { AppComponent } from './app.component';
     AppComponent,
     LoginComponent,
     UserComponent,
-    RegisterComponent
+    RegisterComponent,
+    MovielistComponent
   ],
   imports: [
     BrowserModule,

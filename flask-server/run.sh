@@ -1,13 +1,11 @@
 #!/usr/bin/env bash
-echo "yeey"
-ls
-cd ..
-cd ..
-cd ..
-ls
-python --version
-cd neo-python
-cd neo-python
+#echo "yeey"
+#ls
+#cd ..
+#cd ..
+#cd ..
+#ls
+cd ~/Development/zurich/new-local-neo-python/neo-python
 source venv/bin/activate
 python --version
 echo "START"

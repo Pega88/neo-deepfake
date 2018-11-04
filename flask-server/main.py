@@ -5,9 +5,9 @@ app = Flask(__name__)
 
 @app.route('/')
 def hello_world():
-    res = requests.post('http://localhost:8080/goToBlockchain', json={"mytext":"lalala"})
-    if res.ok:
-        print(res.json())
+    # res = requests.post('http://localhost:8080/goToBlockchain', json={"mytext":"lalala"})
+    # if res.ok:
+    #     print(res.json())
     return 'Hello, World!'
 
 
