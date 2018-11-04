@@ -22,7 +22,6 @@ def go_to_chain():
 def get_status():
     try:
         result = subprocess.check_output(['./run.sh'], shell=False)
-
         return result
     except subprocess.CalledProcessError as e:
         return e
@@ -35,12 +34,4 @@ def write_to_file(args):
         for arg in args:
             f.write(arg + '= ' + json.dumps((args[arg])) + '\n')
 
-    #
-# if __name__ == '__main__':
-#     app.run()
 
-
-# HARDCODED_WALLETNAME = 'testwallet'
-# HARDCODED_PASSWORD = '1234567890'
-# HARDCODED_ARGS = ['0x1d36641faca64ddd0f49af488e543a0f89860690', "add", "1", "2"]
-# ENABLE_AUTO_INVOKE = True

@@ -5,6 +5,7 @@
 #cd ..
 #cd ..
 #ls
+mv settings.py ~/Development/zurich/new-local-neo-python/neo-python/neo/bin/
 cd ~/Development/zurich/new-local-neo-python/neo-python
 source venv/bin/activate
 python --version
