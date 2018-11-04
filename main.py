@@ -25,9 +25,9 @@ from boa.interop.Neo.Action import RegisterAction
 # -------------------------------------------
 
 # https://github.com/CityOfZion/neo-python/issues/183 --> A: Helper.AddrStrToScriptHash('AK2nJJpJr6o664CWJKi1QRXjqeic2zRp8y').Data should work but does not
-OWNER = b'#\xba\'\x03\xc52c\xe8\xd6\xe5"\xdc2 39\xdc\xd8\xee\xe9' #AK2nJJpJr6o664CWJKi1QRXjqeic2zRp8y
-#requester = b'R\x99\x93\xf3\xdf\xc9\xd3\xa4#\xd5\xf8\x9e\x14\x11y\x1d\xd2B\xa1S' #APJd31aTbK4T3qsj45e6uL39FTwX8EGuHJ
-video_owner = b'\x93\xa8\x04\xf5B\'\xfci\xeb\xed@\xef\x82\xf7x\%di\xe0' #AVEcFtSVVzTS3DapRQwfM4tW9jP7ZnJ61m
+OWNER = b'#\xba\'\x03\xc52c\xe8\xd6\xe5"\xdc2 39\xdc\xd8\xee\xe9'  # AK2nJJpJr6o664CWJKi1QRXjqeic2zRp8y -> KxDgvEKzgSBPPfuVfw67oPQBSjidEiqTHURKSDL1R7yGaGYAeYnr
+# fanboy = b'R\x99\x93\xf3\xdf\xc9\xd3\xa4#\xd5\xf8\x9e\x14\x11y\x1d\xd2B\xa1S' #APJd31aTbK4T3qsj45e6uL39FTwX8EGuHJ --> L2ejWJVMwcXg7jwVnmiC8fRfMM8mbBpTxAoZKXXzSRgwggAGP3sC
+video_owner = b'\x93\xa8\x04\xf5B\'\xfci\xeb\xed@\xef\x82\xf7x\%di\xe0'  # AVEcFtSVVzTS3DapRQwfM4tW9jP7ZnJ61m --> L2mRdKbKBUFRsAhvs1wbog5SrSyyysSmYg8NwCZqC87YogGb3Qb2
 # Script hash of the contract owner
 
 # Name of the Token
@@ -54,15 +54,13 @@ OnApprove = RegisterAction('approve', 'addr_from', 'addr_to', 'amount')
 
 def Main(arg0, arg1, arg2, arg3):
     if arg0 == 'create_asset':
-        return create_video_asset(ctx, arg1, arg2)
-
-    elif arg0 == 'check_asset':
-        return is_video_asset(ctx, arg1, arg2)
-
+        video_id = arg1
+        owner = arg2
+        return create_video_asset(ctx, video_id, video_owner)
 
     # user operations
     elif arg0 == 'create_request':
-        # video_hash, requester, text_hash
+        # video_id, requester, text_hash
         return create_request(ctx, arg1, arg2, arg3)
 
     elif arg0 == 'cancel_request':
@@ -127,69 +125,86 @@ def Main(arg0, arg1, arg2, arg3):
     return False
 
 
-# creates a request for the given video_hash, requested by a user, for a specific text hash
-def create_request(ctx, video_hash, requester, text_hash):
+########################
+########################
+###                  ###
+###  OPEN REQUESTS   ###
+###                  ###
+########################
+########################
 
+# creates a request for the given video_id, requested by a user, for a specific text hash
+def create_request(ctx, video_id, requester, text_hash):
     # hold 500 DVL in escrow
     if not do_transfer(ctx, requester, OWNER, 500):
         print("could not put money in escrow")
         return False
 
-    request_id = generate_request_id(video_hash, requester, text_hash)
-    open_requests = get_open_requests_for_video(ctx, video_hash)
+    request_id = generate_request_id(video_id, requester, text_hash)
+    open_requests = get_open_requests_for_video(ctx, video_id)
 
     # create request object to add to
     request = {"request_id": request_id, "requester": requester, "text": text_hash}
 
     open_requests[request_id] = request
-    save_open_requests_for_video(ctx, video_hash, open_requests)
+    save_open_requests_for_video(ctx, video_id, open_requests)
     return True
 
 
-def list_requests(ctx, video_hash):
-    open_requests = get_open_requests_for_video(ctx, video_hash)
+def list_requests(ctx, video_id):
+    open_requests = get_open_requests_for_video(ctx, video_id)
     return open_requests
 
 
-def list_approvals(ctx, video_hash):
-    approved_requests = get_approvals_for_video(ctx, video_hash)
-    return approved_requests
+def get_open_requests_for_video(ctx, video_id):
+    request_key = "r_" + video_id
+    requests = Get(ctx, request_key)
+    if not requests:
+        return {}
+    else:
+        return Deserialize(requests)
 
 
-def approve_request(ctx, video_hash, requester, text_hash):
-    do_transfer(ctx, OWNER,video_owner, 450)
-
-    request_id = generate_request_id(video_hash, requester, text_hash)
-    open_requests = get_open_requests_for_video(ctx, video_hash)
-    request = open_requests[request_id]
-    open_requests[request_id] = None
-    save_open_requests_for_video(ctx, video_hash, open_requests)
-
-    # and add it to the approved ones
-    approved_requests = get_approvals_for_video(ctx, video_hash)
-    approved_requests[request_id] = request
-    save_approvals_for_video(ctx, video_hash, approved_requests)
-
-
-def generate_request_id(video_hash, requester, text_hash):
-    return text_hash  # + requester
+def save_open_requests_for_video(ctx, video_id, open_requests):
+    request_key = "r_" + video_id
+    Put(ctx, request_key, Serialize(open_requests))
 
 
 def cancel_request():
     return True
 
 
-def create_video_asset(ctx, owner, video_hash):
-    Put(ctx, video_hash, owner)
-    return True
+########################
+########################
+###                  ###
+###    APPROVALS     ###
+###                  ###
+########################
+########################
 
 
-def is_video_asset(ctx, owner, video_hash):
-    return Get(ctx, video_hash) == owner
+def approve_request(ctx, video_id, requester, text_hash):
+    do_transfer(ctx, OWNER, video_owner, 450)
+
+    request_id = generate_request_id(video_id, requester, text_hash)
+    open_requests = get_open_requests_for_video(ctx, video_id)
+    request = open_requests[request_id]
+    open_requests[request_id] = None
+    save_open_requests_for_video(ctx, video_id, open_requests)
+
+    # and add it to the approved ones
+    approved_requests = get_approvals_for_video(ctx, video_id)
+    approved_requests[request_id] = request
+    save_approvals_for_video(ctx, video_id, approved_requests)
 
 
-def get_open_requests_for_video(ctx, video_hash):
-    request_key = "r_" + video_hash
+def list_approvals(ctx, video_id):
+    approved_requests = get_approvals_for_video(ctx, video_id)
+    return approved_requests
+
+
+def get_approvals_for_video(ctx, video_id):
+    request_key = "a_" + video_id
     requests = Get(ctx, request_key)
     if not requests:
         return {}
@@ -197,26 +212,46 @@ def get_open_requests_for_video(ctx, video_hash):
         return Deserialize(requests)
 
 
-def save_open_requests_for_video(ctx, video_hash, open_requests):
-    request_key = "r_" + video_hash
-    Put(ctx, request_key, Serialize(open_requests))
-
-
-def get_approvals_for_video(ctx, video_hash):
-    request_key = "a_" + video_hash
-    requests = Get(ctx, request_key)
-    if not requests:
-        return {}
-    else:
-        return Deserialize(requests)
-
-
-def save_approvals_for_video(ctx, video_hash, approved_requests):
-    request_key = "a_" + video_hash
+def save_approvals_for_video(ctx, video_id, approved_requests):
+    request_key = "a_" + video_id
     Put(ctx, request_key, Serialize(approved_requests))
 
 
-##### NEP-5 Methods
+def generate_request_id(video_id, requester, text_hash):
+    return text_hash  # + requester
+
+
+########################
+########################
+###                  ###
+###   VIDEO OWNER    ###
+###                  ###
+########################
+########################
+
+def create_video_asset(ctx, video_id, video_owner):
+    # check if current user is actually the provided key
+    if CheckWitness(video_owner):
+        request_key = "o_" + video_id
+        print(request_key)
+        Put(ctx, request_key, video_owner)
+        return True
+    return False
+
+
+def is_video_owner(ctx, video_id, video_owner):
+    request_key = "o_" + video_id
+    return Get(ctx, request_key) == video_owner
+
+
+########################
+########################
+###                  ###
+###      NEP-5       ###
+###                  ###
+########################
+########################
+
 def do_balance_of(ctx, account):
     """
     Method to return the current balance of an address
@@ -254,7 +289,7 @@ def do_transfer(ctx, t_from, t_to, amount):
     if len(t_to) != 20:
         return False
 
-    if True:#CheckWitness(t_from):
+    if True:  # CheckWitness(t_from):
 
         if t_from == t_to:
             print("transfer to self!")
