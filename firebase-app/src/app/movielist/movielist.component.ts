@@ -96,6 +96,21 @@ export class MovielistComponent implements OnInit{
   ngOnInit(): void {
   }
 
+  getBalance(){
+    var balance = this.authService.getBalance().subscribe(
+          (val) => {
+            console.log(val);
+            this.openPopup(String(JSON.stringify(val)))
+          },
+          response => {
+              this.openPopup(String(JSON.stringify(response)))
+              console.log("POST call in error", response);
+          },
+          () => {
+              console.log("The POST observable is now completed.");
+          });
+  }
+
   setActive(i){
     if(i==1){
       this.tab1 = true;
