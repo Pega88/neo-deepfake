@@ -70,7 +70,7 @@ export class MovielistComponent implements OnInit{
     this.authService.saveNewRequest(username+"_vid1", value.phrase, 'Niels@fourcast.io',  map)
 
 
-    this.authService.postToStatus({'requester':username, 'requestedPhrase': value, 'requestedPerson': username)
+    this.authService.postToStatus({'requester':username, 'requestedPhrase': value, 'requestedPerson': username})
     .subscribe(
         (val) => {
           console.log(val);
