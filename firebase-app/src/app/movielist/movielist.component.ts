@@ -74,10 +74,10 @@ export class MovielistComponent implements OnInit{
     .subscribe(
         (val) => {
           console.log(val);
-          this.openPopup(val)
+          this.openPopup(String(JSON.stringify(result)))
         },
         response => {
-            this.openPopup(response)
+            this.openPopup(String(JSON.stringify(response)))
             console.log("POST call in error", response);
         },
         () => {
@@ -125,10 +125,10 @@ export class MovielistComponent implements OnInit{
     <table class="table table-hover">
       <thead>
         <tr>
-          <th style="width:30%" scope="col">Preview</th>
+          <th style="width:20%" scope="col">Preview</th>
           <th style="width:20%" scope="col">Name</th>
           <th style="width:30%" scope="col">Phrase</th>
-          <th style="width:10%" scope="col">Status</th>
+          <th style="width:20%" scope="col">Status</th>
         </tr>
       </thead>
       <tbody>
@@ -139,20 +139,23 @@ export class MovielistComponent implements OnInit{
     lines.push(baseTable)
     var requests_by_niels = this.authService.getRequestDoneByUser("Niels@fourcast.io").then(
 
-      res => {console.log(res);
+      (res) => {console.log(res);
 
-        // res.forEach(doc => {
-        //     lines.push(`<tr> `)
-        //     lines.push(`<td  style="height:100px"><img src="`+doc.map.pic+`" alt="test" class="img-thumbnail"></td> `)
-        //     lines.push(`<td>`+doc.map.name+`</td> `)
-        //     lines.push(`<td>`+doc.phrase+`</ td> `)
-        //     lines.push(`<td>`+doc.status+`</ td> `)
-        //     lines.push(`</tr> `)
-        //   })
+        res.forEach(doc => {
+          console.log(doc);
+            lines.push(`<tr> `)
+            lines.push(`<td  style="height:100px"><img src="`+doc.map.pic+`" alt="test" class="img-thumbnail"></td> `)
+            lines.push(`<td>`+doc.map.name+`</td> `)
+            lines.push(`<td>`+doc.phrase+`</ td> `)
+            lines.push(`<td>`+doc.status+`</ td> `)
+            lines.push(`</tr> `)
+          })
 
       lines.push(endTable)
-      // document.getElementById("requests").innerHTML = lines;
+      console.log(lines.join(" "))
+      document.getElementById("requests").innerHTML = lines.join(" ");
     })
+
   }
 
 
