@@ -959,6 +959,7 @@ class PromptInterface:
         self.do_open(['wallet', HARDCODED_WALLETNAME])
         if ENABLE_AUTO_INVOKE:
             # self.test_invoke_contract([])
+            self.configure(arguments)
             self.do_build(HARDCODED_ARGS)
             self.quit()
 

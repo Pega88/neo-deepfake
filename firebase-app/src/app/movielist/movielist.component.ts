@@ -19,9 +19,10 @@ export class MovielistComponent implements OnInit{
   tab2: boolean;
   tab3: boolean;
   registerForm: FormGroup;
+  requests_by_niels: Object[];
   // requestForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, public authService: AuthService) {
     // public userService: UserService
     this.createForm();
     this.setActive(1);
@@ -47,6 +48,8 @@ export class MovielistComponent implements OnInit{
       }
     ];
 
+
+
     // this.requestForm = this.fb.group({
     //   request: [name, Validators.required ]
     // });
@@ -55,55 +58,45 @@ export class MovielistComponent implements OnInit{
 
   createForm() {
     this.registerForm = this.fb.group({
-      email: ['', Validators.required ],
-      password: ['',Validators.required]
+      phrase: ['', Validators.required ]
     });
   }
 
-  tryRegister(value){
+  tryRegister(value, username, map){
     console.log(value)
-    // this.authService.doRegister(value)
-    // .then(res => {
-    //   console.log(res);
-    //   this.errorMessage = "";
-    //   this.successMessage = "Your account has been created";
-    // }, err => {
-    //   console.log(err);
-    //   this.errorMessage = err.message;
-    //   this.successMessage = "";
-    // })
+    console.log(map)
+    console.log(username)
+
+    this.authService.saveNewRequest(username+"_vid1", value.phrase, 'Niels@fourcast.io',  map)
+
+
+    this.authService.postToStatus({'requester':username, 'requestedPhrase': value, 'requestedPerson': username)
+    .subscribe(
+        (val) => {
+          console.log(val);
+          this.openPopup(val)
+        },
+        response => {
+            this.openPopup(response)
+            console.log("POST call in error", response);
+        },
+        () => {
+            console.log("The POST observable is now completed.");
+        });
+  }
+
+  openPopup(content){
+    var x=window.open('','','width=600, height=600');
+    x.document.open();
+    x.document.write(content);
+    x.document.close();
   }
 
 
-
-  //
-  // constructor(
-  //   public userService: UserService//,
-  //   // public authService: AuthService,
-  //   // private route: ActivatedRoute,
-  //   // private location : Location,
-  //   // private fb: FormBuilder
-  // ) {
-  //   // this.authService.testpost();
-  // }
 
   ngOnInit(): void {
-    // this.route.data.subscribe(routeData => {
-    //   this.subscribed = false;
-    //   let data = routeData['data'];
-    //   if (data) {
-    //     this.user = data;
-    //     this.createForm(this.user.name);
-    //   }
-    // })
   }
 
-  // createForm(name) {
-  //   this.profileForm = this.fb.group({
-  //     name: [name, Validators.required ]
-  //   });
-  // }
-  //
   setActive(i){
     if(i==1){
       this.tab1 = true;
@@ -111,6 +104,7 @@ export class MovielistComponent implements OnInit{
       this.tab3 = false;
     }
     if(i==2){
+      this.getRequests();
       this.tab1 = false;
       this.tab2 = true;
       this.tab3 = false;
@@ -123,43 +117,45 @@ export class MovielistComponent implements OnInit{
   }
 
 
-  requestVideo(){
 
-    // console.log(value)
-    console.log(document.getElementById("test"));
+  getRequests(){
+    var lines = []
+    var baseTable = `
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th style="width:30%" scope="col">Preview</th>
+          <th style="width:20%" scope="col">Name</th>
+          <th style="width:30%" scope="col">Phrase</th>
+          <th style="width:10%" scope="col">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+      `
+      var endTable = `    </tbody>
+          </table>`
 
-    // this.userService.updateCurrentUser(value)
-    // .then(res => {
-    //   console.log(res);
-    // }, err => console.log(err))
+    lines.push(baseTable)
+    var requests_by_niels = this.authService.getRequestDoneByUser("Niels@fourcast.io").then(
+      res => {console.log(res);
+
+        res.forEach(doc => {
+            lines.push(`<tr> `)
+            lines.push(`<td  style="height:100px"><img src="`+doc.map.pic+`" alt="test" class="img-thumbnail"></td> `)
+            lines.push(`<td>`+doc.map.name+`</td> `)
+            lines.push(`<td>`+doc.phrase+`</ td> `)
+            lines.push(`<td>`+doc.status+`</ td> `)
+             lines.push(`</tr> `)
+
+          })
+      lines.push(endTable)
+      document.getElementById("requests").innerHTML = lines;
+    })
   }
 
-  // unsubscribe(){
-  //   console.log("unsubscribe")
-  //   this.subscribed = false
-  // }
-  //
-  // refreshList(){
-  // this.authService.testpost();
-  // }
-  //
-  // save(value){
-  //
-  //   this.userService.updateCurrentUser(value)
-  //   .then(res => {
-  //     console.log(res);
-  //   }, err => console.log(err))
-  // }
-  //
-  // logout(){
-  //   this.authService.doLogout()
-  //   .then((res) => {
-  //     this.location.back();
-  //   }, (error) => {
-  //     console.log("Logout error", error);
-  //   });
-  //
-  //
-  //
-  // }
+
+  requestVideo(){
+    console.log(document.getElementById("test"));
+  }
+
 }

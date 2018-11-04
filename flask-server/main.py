@@ -22,7 +22,8 @@ def go_to_chain():
 def get_status():
     try:
         result = subprocess.check_output(['./run.sh'], shell=False)
-        return result
+        result = [line for line in str(result).split("\n") if str(line).startswith("Result")]
+        return str(result)
     except subprocess.CalledProcessError as e:
         return e
         return "An error occurred while trying to fetch task status updates."

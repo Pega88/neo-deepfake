@@ -19,6 +19,50 @@ export class AuthService {
    public http: HttpClient
  ){}
 
+ postToStatus(obj) {
+   return this.http.post("http://0.0.0.0:8080/status",obj)
+     // .subscribe(
+     //     (val) => {
+     //       console.log(val);
+     //     },
+     //     response => {
+     //         console.log("POST call in error", response);
+     //     },
+     //     () => {
+     //         console.log("The POST observable is now completed.");
+     //     });
+ }
+
+ saveNewRequest(video_id, phrase, requester, map){
+   const firestore = firebase.firestore();
+   var key = this.generateKey()
+   var data = {
+     video_id: video_id,
+     phrase: phrase,
+     requester: requester,
+     map: map,
+     status: "Request sent"
+   };
+   var setDoc = firestore.collection('requests').add(data);
+ }
+
+
+ getRequestDoneByUser(user_mail){
+   const firestore = firebase.firestore();
+   var queryRef = firestore.collection('requests').where('requester', '==', user_mail);
+   return queryRef.get().then(res => {
+     var allData= []
+     // console.log(res)
+     res.docs.forEach(doc => {
+         allData.push(doc.data())
+         // console.log(doc.id, '=>', doc.data());
+       });
+       return allData
+   }, err => console.log(err))
+ }
+
+////////////////////////////////////
+
   doFacebookLogin(){
     return new Promise<any>((resolve, reject) => {
       let provider = new firebase.auth.FacebookAuthProvider();
