@@ -3,31 +3,53 @@ from boa.interop.Neo.Storage import Get, Put, GetContext, Delete
 from boa.interop.Neo.Runtime import Serialize, Deserialize, CheckWitness
 from boa.interop.Neo.Action import RegisterAction
 
-# setup token
+# config sc-events on
+"""
+    setup token
+"""
+# open wallet owner.wallet
 # build ../neo-deepfake/main.py test 07070707 02 True False False deploy x x x
 # build ../neo-deepfake/main.py test 07070707 02 True False False balanceOf AK2nJJpJr6o664CWJKi1QRXjqeic2zRp8y x x
-# build ../neo-deepfake/main.py test 07070707 02 True False False balanceOf AVEcFtSVVzTS3DapRQwfM4tW9jP7ZnJ61m x x
 # build ../neo-deepfake/main.py test 07070707 02 True False False balanceOf APJd31aTbK4T3qsj45e6uL39FTwX8EGuHJ x x
-# build ../neo-deepfake/main.py test 07070707 07 True False False transfer AK2nJJpJr6o664CWJKi1QRXjqeic2zRp8y APJd31aTbK4T3qsj45e6uL39FTwX8EGuHJ 5000
-# build ../neo-deepfake/main.py test 07070707 02 True False False balanceOf AK2nJJpJr6o664CWJKi1QRXjqeic2zRp8y x x
 # build ../neo-deepfake/main.py test 07070707 02 True False False balanceOf AVEcFtSVVzTS3DapRQwfM4tW9jP7ZnJ61m x x
-# build ../neo-deepfake/main.py test 07070707 02 True False False balanceOf APJd31aTbK4T3qsj45e6uL39FTwX8EGuHJ x x
 
-# build ../neo-deepfake/main.py test 07070707 07 True False False create_request video_id APJd31aTbK4T3qsj45e6uL39FTwX8EGuHJ txt1
-# build ../neo-deepfake/main.py test 07070707 07 True False False list_requests video_id x x
-# build ../neo-deepfake/main.py test 07070707 07 True False False list_approvals video_id x x
-# build ../neo-deepfake/main.py test 07070707 07 True False False approve_request video_id APJd31aTbK4T3qsj45e6uL39FTwX8EGuHJ txt1
-# build ../neo-deepfake/main.py test 07070707 07 True False False list_approvals video_id x x
-# build ../neo-deepfake/main.py test 07070707 07 True False False list_requests video_id x x
+"""
+    Creating Video Asset by Actor
+"""
+# open wallet emmawatson.wallet
+# build ../neo-deepfake/main.py test 07070707 02 True False False create_asset video_1 AVEcFtSVVzTS3DapRQwfM4tW9jP7ZnJ61m x
+# build ../neo-deepfake/main.py test 07070707 07 True False False get_video_owner video_1 x x
+
+"""
+    Creating a request by Fanboy
+"""
+# open wallet fanboy.wallet
+# build ../neo-deepfake/main.py test 07070707 07 True False False create_request video_1 AVEcFtSVVzTS3DapRQwfM4tW9jP7ZnJ61m hello_world
+# build ../neo-deepfake/main.py test 07070707 07 True False False create_request video_1 APJd31aTbK4T3qsj45e6uL39FTwX8EGuHJ hello_world
+# build ../neo-deepfake/main.py test 07070707 07 True False False create_request video_1 APJd31aTbK4T3qsj45e6uL39FTwX8EGuHJ bad_text
+# build ../neo-deepfake/main.py test 07070707 07 True False False list_requests video_1 x x
+# build ../neo-deepfake/main.py test 07070707 07 True False False list_approvals video_1 x x
+# build ../neo-deepfake/main.py test 07070707 07 True False False list_rejections video_1 x x
+# build ../neo-deepfake/main.py test 07070707 07 True False False approve_request video_1 APJd31aTbK4T3qsj45e6uL39FTwX8EGuHJ hello_world
+# build ../neo-deepfake/main.py test 07070707 07 True False False list_approvals video_1 x x
+"""
+    approve request by Emma Watson
+"""
+# open wallet emmawatson.wallet
+# build ../neo-deepfake/main.py test 07070707 07 True False False reject_request video_1 APJd31aTbK4T3qsj45e6uL39FTwX8EGuHJ bad_text
+# build ../neo-deepfake/main.py test 07070707 07 True False False list_approvals video_1 x x
+# build ../neo-deepfake/main.py test 07070707 07 True False False list_requests video_1 x x
+# build ../neo-deepfake/main.py test 07070707 07 True False False list_rejections video_1 x x
 
 # -------------------------------------------
 # TOKEN SETTINGS
 # -------------------------------------------
 
 # https://github.com/CityOfZion/neo-python/issues/183 --> A: Helper.AddrStrToScriptHash('AK2nJJpJr6o664CWJKi1QRXjqeic2zRp8y').Data should work but does not
-OWNER = b'#\xba\'\x03\xc52c\xe8\xd6\xe5"\xdc2 39\xdc\xd8\xee\xe9'  # AK2nJJpJr6o664CWJKi1QRXjqeic2zRp8y -> KxDgvEKzgSBPPfuVfw67oPQBSjidEiqTHURKSDL1R7yGaGYAeYnr
-# fanboy = b'R\x99\x93\xf3\xdf\xc9\xd3\xa4#\xd5\xf8\x9e\x14\x11y\x1d\xd2B\xa1S' #APJd31aTbK4T3qsj45e6uL39FTwX8EGuHJ --> L2ejWJVMwcXg7jwVnmiC8fRfMM8mbBpTxAoZKXXzSRgwggAGP3sC
-video_owner = b'\x93\xa8\x04\xf5B\'\xfci\xeb\xed@\xef\x82\xf7x\%di\xe0'  # AVEcFtSVVzTS3DapRQwfM4tW9jP7ZnJ61m --> L2mRdKbKBUFRsAhvs1wbog5SrSyyysSmYg8NwCZqC87YogGb3Qb2
+OWNER_ADDR = b'#\xba\'\x03\xc52c\xe8\xd6\xe5"\xdc2 39\xdc\xd8\xee\xe9'  # AK2nJJpJr6o664CWJKi1QRXjqeic2zRp8y -> KxDgvEKzgSBPPfuVfw67oPQBSjidEiqTHURKSDL1R7yGaGYAeYnr
+FANBOY_ADDR = b'R\x99\x93\xf3\xdf\xc9\xd3\xa4#\xd5\xf8\x9e\x14\x11y\x1d\xd2B\xa1S'  # APJd31aTbK4T3qsj45e6uL39FTwX8EGuHJ --> L2ejWJVMwcXg7jwVnmiC8fRfMM8mbBpTxAoZKXXzSRgwggAGP3sC
+ACTOR_ADDR = b'\x93\xa8\x04\xf5B\'\xfci\xeb\xed@\xef\x82\xf7x\%di\xe0'  # AVEcFtSVVzTS3DapRQwfM4tW9jP7ZnJ61m --> L2mRdKbKBUFRsAhvs1wbog5SrSyyysSmYg8NwCZqC87YogGb3Qb2
+APPROVAL_FEE = 500
 # Script hash of the contract owner
 
 # Name of the Token
@@ -53,72 +75,92 @@ OnApprove = RegisterAction('approve', 'addr_from', 'addr_to', 'amount')
 
 
 def Main(arg0, arg1, arg2, arg3):
-    if arg0 == 'create_asset':
+    operation = arg0
+    if operation == 'create_asset':
         video_id = arg1
-        owner = arg2
+        video_owner = arg2
         return create_video_asset(ctx, video_id, video_owner)
 
+    elif operation == 'get_video_owner':
+        video_id = arg1
+        return get_video_owner(ctx, video_id)
     # user operations
-    elif arg0 == 'create_request':
-        # video_id, requester, text_hash
-        return create_request(ctx, arg1, arg2, arg3)
+    elif operation == 'create_request':
+        video_id = arg1
+        requester = arg2
+        text = arg3
+        return create_request(ctx, video_id, requester, text)
 
-    elif arg0 == 'cancel_request':
+    elif operation == 'cancel_request':
         return cancel_request()
 
     # actor operations
-    elif arg0 == 'approve_request':
-        approve_request(ctx, arg1, arg2, arg3)
-        return True
+    elif operation == 'approve_request':
+        video_id = arg1
+        requester = arg2
+        text = arg3
+        return approve_request(ctx, video_id, requester, text)
+
+    elif operation == 'reject_request':
+        video_id = arg1
+        requester = arg2
+        text = arg3
+        return reject_request(ctx, video_id, requester, text)
 
     # gets all requests that need to be approved for that video
-    elif arg0 == 'list_requests':
-        return list_requests(ctx, arg1)
+    elif operation == 'list_requests':
+        video_id = arg1
+        return list_requests(ctx, video_id)
 
-    elif arg0 == 'list_approvals':
-        return list_approvals(ctx, arg1)
+    elif operation == 'list_approvals':
+        video_id = arg1
+        return list_approvals(ctx, video_id)
 
-    elif arg0 == 'name':
+    elif operation == 'list_rejections':
+        video_id = arg1
+        return list_rejections(ctx, video_id)
+
+    elif operation == 'name':
         return TOKEN_NAME
 
-    elif arg0 == 'decimals':
+    elif operation == 'decimals':
         return TOKEN_DECIMALS
 
-    elif arg0 == 'symbol':
+    elif operation == 'symbol':
         return TOKEN_SYMBOL
 
-    elif arg0 == 'totalSupply':
+    elif operation == 'totalSupply':
         return TOKEN_TOTAL_SUPPLY
 
-    elif arg0 == 'balanceOf':
+    elif operation == 'balanceOf':
         account = arg1
         return do_balance_of(ctx, account)
 
-    elif arg0 == 'transfer':
+    elif operation == 'transfer':
         t_from = arg1
         t_to = arg2
         t_amount = arg3
         return do_transfer(ctx, t_from, t_to, t_amount)
 
-    elif arg0 == 'transferFrom':
+    elif operation == 'transferFrom':
         t_from = arg1
         t_to = arg2
         t_amount = arg3
         return do_transfer_from(ctx, t_from, t_to, t_amount)
 
-    elif arg0 == 'approve':
+    elif operation == 'approve':
         t_owner = arg1
         t_spender = arg2
         t_amount = arg3
         return do_approve(ctx, t_owner, t_spender, t_amount)
 
 
-    elif arg0 == 'allowance':
+    elif operation == 'allowance':
         t_owner = arg1
         t_spender = arg2
         return do_allowance(ctx, t_owner, t_spender)
 
-    elif arg0 == "deploy":
+    elif operation == "deploy":
         return deploy()
 
     return 'unknown operation'
@@ -133,18 +175,22 @@ def Main(arg0, arg1, arg2, arg3):
 ########################
 ########################
 
-# creates a request for the given video_id, requested by a user, for a specific text hash
-def create_request(ctx, video_id, requester, text_hash):
-    # hold 500 DVL in escrow
-    if not do_transfer(ctx, requester, OWNER, 500):
+# creates a request for the given video_id, requested by a user, for a specific text
+def create_request(ctx, video_id, requester, text):
+    # hold APPROVAL_FEE DVL in escrow
+    if not CheckWitness(requester):
+        print("request not made for current user")
+        return False
+
+    if not do_transfer(ctx, requester, OWNER_ADDR, APPROVAL_FEE):
         print("could not put money in escrow")
         return False
 
-    request_id = generate_request_id(video_id, requester, text_hash)
+    request_id = generate_request_id(video_id, requester, text)
     open_requests = get_open_requests_for_video(ctx, video_id)
 
     # create request object to add to
-    request = {"request_id": request_id, "requester": requester, "text": text_hash}
+    request = {"request_id": request_id, "requester": requester, "text": text}
 
     open_requests[request_id] = request
     save_open_requests_for_video(ctx, video_id, open_requests)
@@ -183,19 +229,28 @@ def cancel_request():
 ########################
 
 
-def approve_request(ctx, video_id, requester, text_hash):
-    do_transfer(ctx, OWNER, video_owner, 450)
+def approve_request(ctx, video_id, requester, text):
+    vid_owner = get_video_owner(ctx, video_id)
+    if CheckWitness(vid_owner):
 
-    request_id = generate_request_id(video_id, requester, text_hash)
-    open_requests = get_open_requests_for_video(ctx, video_id)
-    request = open_requests[request_id]
-    open_requests[request_id] = None
-    save_open_requests_for_video(ctx, video_id, open_requests)
+        # remove from list of requests
+        request_id = generate_request_id(video_id, requester, text)
+        open_requests = get_open_requests_for_video(ctx, video_id)
+        request = open_requests[request_id]
+        open_requests[request_id] = None
+        save_open_requests_for_video(ctx, video_id, open_requests)
 
-    # and add it to the approved ones
-    approved_requests = get_approvals_for_video(ctx, video_id)
-    approved_requests[request_id] = request
-    save_approvals_for_video(ctx, video_id, approved_requests)
+        # and add it to the approved ones
+        approved_requests = get_approvals_for_video(ctx, video_id)
+        approved_requests[request_id] = request
+        save_approvals_for_video(ctx, video_id, approved_requests)
+
+        # pay the actor
+        do_transfer(ctx, OWNER_ADDR, ACTOR_ADDR, APPROVAL_FEE)
+        return True
+    else:
+        print("approval action is not called called by video owner")
+        return False
 
 
 def list_approvals(ctx, video_id):
@@ -217,8 +272,60 @@ def save_approvals_for_video(ctx, video_id, approved_requests):
     Put(ctx, request_key, Serialize(approved_requests))
 
 
-def generate_request_id(video_id, requester, text_hash):
-    return text_hash  # + requester
+########################
+########################
+###                  ###
+###   REJECTIONS     ###
+###                  ###
+########################
+########################
+
+
+def reject_request(ctx, video_id, requester, text):
+    vid_owner = get_video_owner(ctx, video_id)
+    if CheckWitness(vid_owner):
+
+        # remove from list of requests
+        request_id = generate_request_id(video_id, requester, text)
+        open_requests = get_open_requests_for_video(ctx, video_id)
+        request = open_requests[request_id]
+        open_requests[request_id] = None
+        save_open_requests_for_video(ctx, video_id, open_requests)
+
+        # and add it to the rejected ones
+        rejected_requests = get_rejections_for_video(ctx, video_id)
+        rejected_requests[request_id] = request
+        save_rejections_for_video(ctx, video_id, rejected_requests)
+
+        # pay the requestor
+        do_transfer(ctx, OWNER_ADDR, ACTOR_ADDR, requester)
+        return True
+    else:
+        print("reject action is not called called by video owner")
+        return False
+
+
+def list_rejections(ctx, video_id):
+    rejected_requests = get_rejections_for_video(ctx, video_id)
+    return rejected_requests
+
+
+def get_rejections_for_video(ctx, video_id):
+    request_key = "q_" + video_id
+    requests = Get(ctx, request_key)
+    if not requests:
+        return {}
+    else:
+        return Deserialize(requests)
+
+
+def save_rejections_for_video(ctx, video_id, rejected_requests):
+    request_key = "q_" + video_id
+    Put(ctx, request_key, Serialize(rejected_requests))
+
+
+def generate_request_id(video_id, requester, text):
+    return text  # + requester
 
 
 ########################
@@ -236,12 +343,17 @@ def create_video_asset(ctx, video_id, video_owner):
         print(request_key)
         Put(ctx, request_key, video_owner)
         return True
+    print("request for owner different from caller")
     return False
 
 
-def is_video_owner(ctx, video_id, video_owner):
+def get_video_owner(ctx, video_id):
     request_key = "o_" + video_id
-    return Get(ctx, request_key) == video_owner
+    return Get(ctx, request_key)
+
+
+def is_video_owner(ctx, video_id, video_owner):
+    return get_video_owner(ctx, video_id) == video_owner
 
 
 ########################
@@ -456,16 +568,19 @@ def deploy():
     :return:
         bool: Whether the operation was successful
     """
-    # if not CheckWitness(OWNER):
-    #    print("Must be owner to deploy")
-    #    return False
+    if not CheckWitness(OWNER_ADDR):
+        print("Must be owner to deploy")
+        return False
 
     if not Get(ctx, 'initialized'):
         # do deploy logic
         Put(ctx, 'initialized', 1)
-        Put(ctx, OWNER, TOKEN_TOTAL_SUPPLY)
+        Put(ctx, OWNER_ADDR, TOKEN_TOTAL_SUPPLY)
         # dispatch transfer event for minting
-        OnTransfer(None, OWNER, TOKEN_TOTAL_SUPPLY)
+        OnTransfer(None, OWNER_ADDR, TOKEN_TOTAL_SUPPLY)
+
+        # hand out some starting budget
+        do_transfer(ctx, OWNER_ADDR, FANBOY_ADDR, 1000)
         return True
 
     return False
