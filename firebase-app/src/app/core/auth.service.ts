@@ -21,16 +21,10 @@ export class AuthService {
 
  postToStatus(obj) {
    return this.http.post("http://0.0.0.0:8080/status",obj)
-     // .subscribe(
-     //     (val) => {
-     //       console.log(val);
-     //     },
-     //     response => {
-     //         console.log("POST call in error", response);
-     //     },
-     //     () => {
-     //         console.log("The POST observable is now completed.");
-     //     });
+ }
+
+ getBalance(obj) {
+   return this.http.post("http://0.0.0.0:8080/list_balance_fanboy",obj)
  }
 
  saveNewRequest(video_id, phrase, requester, map){

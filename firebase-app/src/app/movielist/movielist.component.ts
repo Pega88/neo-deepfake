@@ -20,7 +20,6 @@ export class MovielistComponent implements OnInit{
   tab3: boolean;
   registerForm: FormGroup;
   requests_by_niels: Object[];
-  // requestForm: FormGroup;
 
   constructor(private fb: FormBuilder, public authService: AuthService) {
     // public userService: UserService
@@ -32,19 +31,19 @@ export class MovielistComponent implements OnInit{
         pic: "https://storage.googleapis.com/neo-zurich/max.png",
         name: "Maxime Vandepoel",
         score: "5",
-        price: "10"
+        price: "100"
       },
       {
         pic: "https://storage.googleapis.com/neo-zurich/niels.jpeg",
         name: "Niels Buekers",
         score: "4",
-        price: "2"
+        price: "200"
       },
       {
         pic: "https://storage.googleapis.com/neo-zurich/serge.jpeg",
         name: "Serge Hendrickx",
-        score: "4",
-        price: "5"
+        score: "3",
+        price: "150"
       }
     ];
 
@@ -74,7 +73,7 @@ export class MovielistComponent implements OnInit{
     .subscribe(
         (val) => {
           console.log(val);
-          this.openPopup(String(JSON.stringify(result)))
+          this.openPopup(String(JSON.stringify(val)))
         },
         response => {
             this.openPopup(String(JSON.stringify(response)))
