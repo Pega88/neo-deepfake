@@ -20,7 +20,7 @@ export class AuthService {
  ){}
 
  postToStatus(obj) {
-   return this.http.post("http://0.0.0.0:8080/status",obj)
+   return this.http.post("http://0.0.0.0:8080/create_asset",obj)
      // .subscribe(
      //     (val) => {
      //       console.log(val);

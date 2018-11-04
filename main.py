@@ -29,7 +29,7 @@ from boa.interop.Neo.Action import RegisterAction
 # build ../neo-deepfake/main.py test 07070707 07 True False False create_request video_1 AVEcFtSVVzTS3DapRQwfM4tW9jP7ZnJ61m hello_world
 # build ../neo-deepfake/main.py test 07070707 07 True False False create_request video_1 APJd31aTbK4T3qsj45e6uL39FTwX8EGuHJ hello_world
 # build ../neo-deepfake/main.py test 07070707 07 True False False create_request video_1 APJd31aTbK4T3qsj45e6uL39FTwX8EGuHJ bad_text
-# build ../neo-deepfake/main.py test 07070707 07 True False False list_requests video_1 x x
+# build ../neo-deepfake/main.py test 07070707 07 True False False list_requests video_2 x x
 # build ../neo-deepfake/main.py test 07070707 07 True False False list_approvals video_1 x x
 # build ../neo-deepfake/main.py test 07070707 07 True False False list_rejections video_1 x x
 # build ../neo-deepfake/main.py test 07070707 07 True False False approve_request video_1 APJd31aTbK4T3qsj45e6uL39FTwX8EGuHJ hello_world
@@ -43,6 +43,10 @@ from boa.interop.Neo.Action import RegisterAction
 # build ../neo-deepfake/main.py test 07070707 07 True False False list_requests video_1 x x
 # build ../neo-deepfake/main.py test 07070707 07 True False False list_rejections video_1 x x
 
+
+# build ../neo-deepfake/main.py test 07070707 07 True False False transfer AK2nJJpJr6o664CWJKi1QRXjqeic2zRp8y APJd31aTbK4T3qsj45e6uL39FTwX8EGuHJ 100000
+# build ../neo-deepfake/main.py test 07070707 07 True False False transfer AK2nJJpJr6o664CWJKi1QRXjqeic2zRp8y AVEcFtSVVzTS3DapRQwfM4tW9jP7ZnJ61m 100000
+
 # -------------------------------------------
 # TOKEN SETTINGS
 # -------------------------------------------
@@ -55,7 +59,7 @@ APPROVAL_FEE = 500
 # Script hash of the contract owner
 
 # Name of the Token
-TOKEN_NAME = 'DeepFake Token!'
+TOKEN_NAME = 'DeepFake Token'
 
 # Symbol of the Token
 TOKEN_SYMBOL = 'DVL'
@@ -582,7 +586,7 @@ def deploy():
         OnTransfer(None, OWNER_ADDR, TOKEN_TOTAL_SUPPLY)
 
         # hand out some starting budget
-        do_transfer(ctx, OWNER_ADDR, FANBOY_ADDR, 1000)
+        do_transfer(ctx, OWNER_ADDR, FANBOY_ADDR, 100000)
         return True
 
     return False
