@@ -5,7 +5,7 @@
 #cd ..
 #cd ..
 #ls
-mv settings.py ~/Development/crypto/neo/neo-python/neo/bin/
+cp ~/Development/crypto/neo/neo-python/neo/bin/settings/$1 ~/Development/crypto/neo/neo-python/neo/bin/custom_settings.py
 cd ~/Development/crypto/neo/neo-python
 source venv/bin/activate
 python --version

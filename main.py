@@ -8,6 +8,8 @@ from boa.interop.Neo.Action import RegisterAction
     setup token
 """
 # open wallet owner.wallet
+# send GAS APJd31aTbK4T3qsj45e6uL39FTwX8EGuHJ 100
+# send GAS AVEcFtSVVzTS3DapRQwfM4tW9jP7ZnJ61m 100
 # build ../neo-deepfake/main.py test 07070707 02 True False False deploy x x x
 # build ../neo-deepfake/main.py test 07070707 02 True False False balanceOf AK2nJJpJr6o664CWJKi1QRXjqeic2zRp8y x x
 # build ../neo-deepfake/main.py test 07070707 02 True False False balanceOf APJd31aTbK4T3qsj45e6uL39FTwX8EGuHJ x x
@@ -53,7 +55,7 @@ APPROVAL_FEE = 500
 # Script hash of the contract owner
 
 # Name of the Token
-TOKEN_NAME = 'DeepFake Token'
+TOKEN_NAME = 'DeepFake Token!'
 
 # Symbol of the Token
 TOKEN_SYMBOL = 'DVL'
