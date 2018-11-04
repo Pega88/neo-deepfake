@@ -104,10 +104,11 @@ export class MovielistComponent implements OnInit{
       this.tab3 = false;
     }
     if(i==2){
-      this.getRequests();
+
       this.tab1 = false;
       this.tab2 = true;
       this.tab3 = false;
+      this.getRequests();
     }
     if(i==3){
       this.tab1 = false;
@@ -137,19 +138,20 @@ export class MovielistComponent implements OnInit{
 
     lines.push(baseTable)
     var requests_by_niels = this.authService.getRequestDoneByUser("Niels@fourcast.io").then(
+
       res => {console.log(res);
 
-        res.forEach(doc => {
-            lines.push(`<tr> `)
-            lines.push(`<td  style="height:100px"><img src="`+doc.map.pic+`" alt="test" class="img-thumbnail"></td> `)
-            lines.push(`<td>`+doc.map.name+`</td> `)
-            lines.push(`<td>`+doc.phrase+`</ td> `)
-            lines.push(`<td>`+doc.status+`</ td> `)
-             lines.push(`</tr> `)
+        // res.forEach(doc => {
+        //     lines.push(`<tr> `)
+        //     lines.push(`<td  style="height:100px"><img src="`+doc.map.pic+`" alt="test" class="img-thumbnail"></td> `)
+        //     lines.push(`<td>`+doc.map.name+`</td> `)
+        //     lines.push(`<td>`+doc.phrase+`</ td> `)
+        //     lines.push(`<td>`+doc.status+`</ td> `)
+        //     lines.push(`</tr> `)
+        //   })
 
-          })
       lines.push(endTable)
-      document.getElementById("requests").innerHTML = lines;
+      // document.getElementById("requests").innerHTML = lines;
     })
   }
 
