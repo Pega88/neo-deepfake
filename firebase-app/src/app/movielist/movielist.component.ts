@@ -73,10 +73,10 @@ export class MovielistComponent implements OnInit{
     .subscribe(
         (val) => {
           console.log(val);
-          this.openPopup(String(JSON.stringify(val)))
+          // this.openPopup(String(JSON.stringify(val)))
         },
         response => {
-            this.openPopup(String(JSON.stringify(response)))
+            // this.openPopup(String(JSON.stringify(response)))
             console.log("POST call in error", response);
         },
         () => {
@@ -100,7 +100,7 @@ export class MovielistComponent implements OnInit{
     var balance = this.authService.getBalance().subscribe(
           (val) => {
             console.log(val);
-            this.openPopup(String(JSON.stringify(val)))
+            // this.openPopup(String(JSON.stringify(val)))
           },
           response => {
               //this.openPopup(String(JSON.stringify(response)))
