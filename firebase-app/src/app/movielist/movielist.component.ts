@@ -14,19 +14,78 @@ import { FirebaseUserModel } from '../core/user.model';
 })
 export class MovielistComponent implements OnInit{
 
-  // user: FirebaseUserModel = new FirebaseUserModel();
-  // subscribed: boolean;
-  // profileForm: FormGroup;
+  availeable_profiles: Object[];
+  tab1: boolean;
+  tab2: boolean;
+  tab3: boolean;
+  registerForm: FormGroup;
+  // requestForm: FormGroup;
 
-  constructor(
-    public userService: UserService//,
-    // public authService: AuthService,
-    // private route: ActivatedRoute,
-    // private location : Location,
-    // private fb: FormBuilder
-  ) {
-    // this.authService.testpost();
+  constructor(private fb: FormBuilder) {
+    // public userService: UserService
+    this.createForm();
+    this.setActive(1);
+
+    this.availeable_profiles = [
+      {
+        pic: "https://storage.googleapis.com/neo-zurich/max.png",
+        name: "Maxime Vandepoel",
+        score: "5",
+        price: "10"
+      },
+      {
+        pic: "https://storage.googleapis.com/neo-zurich/niels.jpeg",
+        name: "Niels Buekers",
+        score: "4",
+        price: "2"
+      },
+      {
+        pic: "https://storage.googleapis.com/neo-zurich/serge.jpeg",
+        name: "Serge Hendrickx",
+        score: "4",
+        price: "5"
+      }
+    ];
+
+    // this.requestForm = this.fb.group({
+    //   request: [name, Validators.required ]
+    // });
+
   }
+
+  createForm() {
+    this.registerForm = this.fb.group({
+      email: ['', Validators.required ],
+      password: ['',Validators.required]
+    });
+  }
+
+  tryRegister(value){
+    console.log(value)
+    // this.authService.doRegister(value)
+    // .then(res => {
+    //   console.log(res);
+    //   this.errorMessage = "";
+    //   this.successMessage = "Your account has been created";
+    // }, err => {
+    //   console.log(err);
+    //   this.errorMessage = err.message;
+    //   this.successMessage = "";
+    // })
+  }
+
+
+
+  //
+  // constructor(
+  //   public userService: UserService//,
+  //   // public authService: AuthService,
+  //   // private route: ActivatedRoute,
+  //   // private location : Location,
+  //   // private fb: FormBuilder
+  // ) {
+  //   // this.authService.testpost();
+  // }
 
   ngOnInit(): void {
     // this.route.data.subscribe(routeData => {
@@ -45,20 +104,39 @@ export class MovielistComponent implements OnInit{
   //   });
   // }
   //
-  // subscribe(){
-  //   console.log("subscribe")
-  //   this.subscribed = true
-  //   var toRun = 'testinvoke 0x2cd1380a87107b8bc3731871f7ea3318a167d06d update ["newsletter_1","QmfTJTArNhjKbZtXuZFbg5tZPugughDiTTPWnMaLScsEgJ"]'
-  //   document.getElementById("hint").innerHTML = "<br/><br/><b>Hi Niels.. Sorry, I can't send a transaction yet.. Could you please manually run this? Thanks!</b><br/><br/>"+toRun;
-  //
-  // }
-  //
+  setActive(i){
+    if(i==1){
+      this.tab1 = true;
+      this.tab2 = false;
+      this.tab3 = false;
+    }
+    if(i==2){
+      this.tab1 = false;
+      this.tab2 = true;
+      this.tab3 = false;
+    }
+    if(i==3){
+      this.tab1 = false;
+      this.tab2 = false;
+      this.tab3 = true;
+    }
+  }
+
+
+  requestVideo(){
+
+    // console.log(value)
+    console.log(document.getElementById("test"));
+
+    // this.userService.updateCurrentUser(value)
+    // .then(res => {
+    //   console.log(res);
+    // }, err => console.log(err))
+  }
+
   // unsubscribe(){
   //   console.log("unsubscribe")
   //   this.subscribed = false
-  //   var toRun = 'testinvoke 0x2cd1380a87107b8bc3731871f7ea3318a167d06d update ["newsletter_1","QmQ6YMDhikq9TdVWBDRxwgvrEPxKnsvHvxMXBMDTZqXeQo"]'
-  //
-  //   document.getElementById("hint").innerHTML = "<br/><br/><b>Hi Niels.. Sorry, I can't send a transaction yet.. Could you please manually run this? Thanks!</b><br/><br/>"+toRun;
   // }
   //
   // refreshList(){
