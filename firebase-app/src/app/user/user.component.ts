@@ -62,11 +62,10 @@ export class UserComponent implements OnInit{
   }
 
   refreshList(){
-  this.authService.testpost();
+    this.authService.testpost();
   }
 
   save(value){
-
     this.userService.updateCurrentUser(value)
     .then(res => {
       console.log(res);
