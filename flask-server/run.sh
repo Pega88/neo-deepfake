@@ -2,8 +2,11 @@
 echo "yeey"
 ls
 cd ..
+cd ..
+cd ..
 ls
 python --version
+cd neo-python
 cd neo-python
 source venv/bin/activate
 python --version

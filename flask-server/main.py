@@ -7,7 +7,7 @@ app = Flask(__name__)
 def hello_world():
     res = requests.post('http://localhost:8080/goToBlockchain', json={"mytext":"lalala"})
     if res.ok:
-        print res.json()
+        print(res.json())
     return 'Hello, World!'
 
 
