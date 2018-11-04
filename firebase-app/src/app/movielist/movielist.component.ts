@@ -154,7 +154,7 @@ export class MovielistComponent implements OnInit{
     var requests_by_niels = this.authService.getRequestDoneByUser("Niels@fourcast.io").then(
 
       (res) => {console.log(res);
-
+        if (res){
         res.forEach(doc => {
           console.log(doc);
             lines.push(`<tr> `)
@@ -164,7 +164,7 @@ export class MovielistComponent implements OnInit{
             lines.push(`<td>`+doc.status+`</ td> `)
             lines.push(`</tr> `)
           })
-
+        }
       lines.push(endTable)
       console.log(lines.join(" "))
       document.getElementById("requests").innerHTML = lines.join(" ");

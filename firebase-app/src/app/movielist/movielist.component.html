@@ -6,11 +6,12 @@
 <a (click)="setActive(1)" class="btn btn-danger">Browse profiles</a>
 <a (click)="setActive(2)" class="btn btn-danger">My requests</a>
 <a (click)="getBalance()" class="btn btn-warning">Get Balance</a>
-<div id="balance"></div>
 
 
 
 <div *ngIf='tab1'>
+
+<h2> Browse Profiles </h2>
 
 <table class="table table-hover">
   <thead>
@@ -44,8 +45,11 @@
 
 </div>
 
-<div id="requests"></div>
 
 <div *ngIf='tab2'>
+
+  <h2> Browse Profiles </h2>
+  <div id="requests"></div>
+
 
 </div>
